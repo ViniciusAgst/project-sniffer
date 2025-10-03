@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "SUSE Mono", monospace;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("../images/background.gif") no-repeat center center / cover;
+    filter: blur(8px) brightness(0.6);
+    transform: scale(1.05); /* evita bordas ao desfocar */
+    z-index: -1;            /* fica atrás do conteúdo */
+}
