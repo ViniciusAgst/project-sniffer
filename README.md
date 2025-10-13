@@ -20,9 +20,10 @@ O projeto integra:
 
 - Captura de pacotes Ethernet, IPv4/IPv6, TCP, UDP e ICMP  
 - Atualização em tempo real da lista de pacotes na interface web  
-- Histórico limitado com lista rotativa (ex.: últimos 1000 pacotes)  
+- Histórico limitado com lista rotativa (ex.: últimos 10000 pacotes)  
 - Visualização detalhada de cada pacote  
-- Interface responsiva usando Spring Boot + Thymeleaf  
+- Interface responsiva usando Spring Boot + Thymeleaf
+- Banco de dados integrado
 
 ---
 
@@ -32,7 +33,8 @@ O projeto integra:
 - **Spring Boot 3.2.x**  
 - **Pcap4J** para captura de pacotes  
 - **Thymeleaf** para renderização de páginas HTML  
-- **Maven** como gerenciador de dependências  
+- **Gradle** como gerenciador de dependências
+- **MySQL** como banco de dados
 
 ---
 
@@ -41,7 +43,7 @@ O projeto integra:
 ### Pré-requisitos
 
 - Java 17 ou superior  
-- Maven  
+- Gradle  
 - Biblioteca nativa do **Pcap4J** instalada e configurada  
 - Permissões de administrador/root para captura de pacotes em algumas interfaces  
 
