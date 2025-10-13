@@ -1,20 +1,28 @@
 package br.ufpe.vinicius.projectsniffer.controllers;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+import br.ufpe.vinicius.projectsniffer.App;
+import br.ufpe.vinicius.projectsniffer.frame.Frame;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
 public class FrameController {
 
-    @RequestMapping("/")
-    public String index() {
-        if(AuthController.logged){
-            return "forward:/index.html"; // procura em templates/index.html
-        }
-        return "forward:/login.html";
+    @GetMapping("/frames")
+    public List<Frame> frames(@RequestParam(defaultValue = "10") int limit) {
+        return App.getInterfaceSelector().getFrames().getTops(limit);
     }
 
-    @RequestMapping("/login")
-    public String login() {
-        return "forward:/login.html";
+    @GetMapping("/frames-size")
+    public int framesSize() {
+        return App.getInterfaceSelector().getFrames().getFullSize();
+    }
+
+    @GetMapping("/frames-length")
+    public long framesLength() {
+        return Frame.lengthFull;
     }
 }
