@@ -28,7 +28,7 @@ async function updateDataLength() {
     }
 }
 
-// Atualiza ambos a cada 2 segundos
+// Atualiza ambos a cada 1 segundos
 setInterval(() => {
     updatePacketCount();
     updateDataLength();

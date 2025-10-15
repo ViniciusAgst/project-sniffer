@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project-Sniffer Login</title>
+
+    <link rel="stylesheet" th:href="@{/styles/login-style.css}">
+</head>
+
+<body>
+<canvas id="network"></canvas>
+
+<div id="header">
+    <div id="header-left">
+        <img id="logo" src="./images/logo.gif" alt="Logo">
+        <h1>Sniffer de Rede</h1>
+    </div>
+    <div id="header-right">
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+    </div>
+</div>
+
+<div id="login-frame">
+    <h1>AUTENTICAÇÃO</h1>
+    <form action="/auth" method="post">
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Entrar</button>
+    </form>
+
+    <p class="error-block" th:if="${erro}" th:text="${erro}"></p>
+</div>
+
+<script th:src="@{/scripts/dashboard-net.js}"></script>
+
+<footer id="footer">
+    <p>© 2025 Eng. Controle e Automação - DEE. by Vinicius</p>
+</footer>
+
+</body>
+
+</html>

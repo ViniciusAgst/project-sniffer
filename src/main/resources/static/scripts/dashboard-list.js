@@ -93,8 +93,10 @@ async function loadPackets() {
                 <td>${srcPort}</td>
                 <td>${dstPort}</td>
             `;
-            tbody.appendChild(tr);
+
+            frames.appendChild(tr);
         });
+
     } catch (err) {
         console.error('Erro ao carregar pacotes:', err);
     }
