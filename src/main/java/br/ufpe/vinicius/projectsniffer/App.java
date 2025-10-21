@@ -16,7 +16,7 @@ public class App {
     @Getter
     private static InterfaceSelector interfaceSelector;
 
-    protected static Logger logger;
+    public static Logger logger;
 
     public static void main(String[] args) {
         LogManager.getLogManager().reset();
@@ -26,7 +26,7 @@ public class App {
 
         logger = LoggerFactory.getLogger(App.class);
 
-        interfaceSelector = new InterfaceSelector(logger);
+        interfaceSelector = new InterfaceSelector();
         interfaceSelector.interfaceSelect();
     }
 }

@@ -1,12 +1,12 @@
 package br.ufpe.vinicius.projectsniffer.packetlister;
 
-import br.ufpe.vinicius.projectsniffer.cache.CacheRotate;
-import br.ufpe.vinicius.projectsniffer.controllers.FrameController;
 import br.ufpe.vinicius.projectsniffer.frame.Frame;
 import br.ufpe.vinicius.projectsniffer.frame.FrameEthernet;
 import br.ufpe.vinicius.projectsniffer.frame.FrameIpv4;
 import br.ufpe.vinicius.projectsniffer.frame.FrameTcp;
 
+import br.ufpe.vinicius.projectsniffer.services.PacketService;
+import br.ufpe.vinicius.projectsniffer.utils.SpringContext;
 import org.pcap4j.core.PacketListener;
 import org.pcap4j.packet.EthernetPacket;
 import org.pcap4j.packet.IpV4Packet;
@@ -15,12 +15,18 @@ import org.pcap4j.packet.TcpPacket;
 import org.pcap4j.packet.namednumber.EtherType;
 
 import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class InterfaceListener implements PacketListener {
 
-    private final CacheRotate<Frame> frames;
+    private final DateTimeFormatter formatter;
+    private final PacketService packetService;
 
-    public InterfaceListener(CacheRotate<Frame> frames) {
-        this.frames = frames;
+    public InterfaceListener() {
+        this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS 'UTC'");
+        this.packetService = SpringContext.getBean(PacketService.class);
     }
 
     @Override
@@ -47,8 +53,9 @@ public class InterfaceListener implements PacketListener {
             String srcIP = ipPacket.getHeader().getSrcAddr().getHostAddress();
             String dstIP = ipPacket.getHeader().getDstAddr().getHostAddress();
             String protocol = ipPacket.getHeader().getProtocol().valueAsString();
+            int lenght = ipPacket.getHeader().getTotalLengthAsInt();
 
-            ipv4 = new FrameIpv4(srcIP, dstIP, protocol);
+            ipv4 = new FrameIpv4(srcIP, dstIP, protocol, lenght);
         }
 
         FrameTcp tcp = null;
@@ -63,10 +70,12 @@ public class InterfaceListener implements PacketListener {
             tcp = new FrameTcp(srcPort, dstPort, hexString);
         }
 
-        final Frame frame = new Frame(Instant.now(), ethernet, ipv4, tcp, packet.length());
+        ZonedDateTime nowUtc = Instant.now().atZone(ZoneOffset.UTC);
 
-        Frame.lengthFull = Frame.lengthFull + frame.getLength();
+        String timeStamp = formatter.format(nowUtc);
 
-        frames.add(frame);
+        final Frame frame = new Frame(timeStamp, ethernet, ipv4, tcp);
+
+        packetService.addFrame(frame);
     }
 }

@@ -11,12 +11,10 @@ import java.time.Instant;
 @AllArgsConstructor
 public class Frame {
 
-    public static long lengthFull = 0;
+    private String timestamp;
 
-    private Instant timestamp;
     private FrameEthernet ethernet;
     private FrameIpv4 ipv4;
     private FrameTcp tcp;
-    private int length;
 
 }

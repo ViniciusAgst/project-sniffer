@@ -13,16 +13,12 @@ public class CacheRotate<T> {
     private final int maxSize;
     private final Deque<T> deque;
 
-    private int fullSize;
-
     public CacheRotate(int maxSize) {
         this.maxSize = maxSize;
         this.deque = new ConcurrentLinkedDeque<>();
     }
 
     public void add(T element) {
-        fullSize++;
-
         deque.addFirst(element);
         while (deque.size() > maxSize) {
             deque.pollLast();
@@ -31,11 +27,5 @@ public class CacheRotate<T> {
 
     public Deque<T> getAll() {
         return deque;
-    }
-
-    public synchronized List<T> getTops(int limit) {
-        return deque.stream()
-                .limit(limit)
-                .collect(Collectors.toList());
     }
 }

@@ -1,12 +1,10 @@
 package br.ufpe.vinicius.projectsniffer.packetlister;
 
 
-import br.ufpe.vinicius.projectsniffer.cache.CacheRotate;
-import br.ufpe.vinicius.projectsniffer.frame.Frame;
+import br.ufpe.vinicius.projectsniffer.App;
 import lombok.Getter;
 import org.pcap4j.core.*;
 import org.pcap4j.util.NifSelector;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 
@@ -15,16 +13,8 @@ public class InterfaceSelector{
 
     private PcapNetworkInterface networkInterface;
 
-    private final Logger logger;
-
-    private final CacheRotate<Frame> frames;
-
-    public InterfaceSelector(Logger logger){
+    public InterfaceSelector(){
         this.networkInterface = null;
-
-        this.logger = logger;
-
-        this.frames = new CacheRotate<>(10000);
     }
 
     public void interfaceSelect() {
@@ -35,15 +25,15 @@ public class InterfaceSelector{
                 throw new IOException();
             }
 
-            this.logger.info("Nif selecionado: {}", networkInterface);
+            App.logger.info("Interface selecionada: {}", networkInterface);
 
-            InterfaceHandler handler = new InterfaceHandler(this);
+            InterfaceHandler handler = new InterfaceHandler(networkInterface.getName());
 
             handler.start();
 
         } catch (IOException | NotOpenException | PcapNativeException e) {
 
-            logger.error("#1 Falha ao encontrar interfaces de rede", e);
+            App.logger.error("#1 Falha ao encontrar interfaces de rede", e);
 
         }
     }

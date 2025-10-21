@@ -1,16 +1,15 @@
 package br.ufpe.vinicius.projectsniffer.packetlister;
 
+import br.ufpe.vinicius.projectsniffer.App;
 import org.pcap4j.core.*;
 
 public class InterfaceHandler extends Thread {
 
-    private final InterfaceSelector selector;
     private final PcapHandle handle;
 
-    protected InterfaceHandler(InterfaceSelector selector) throws PcapNativeException, NotOpenException {
-        this.selector = selector;
+    protected InterfaceHandler(String name) throws PcapNativeException, NotOpenException {
 
-        this.handle = new PcapHandle.Builder(selector.getNetworkInterface().getName())
+        this.handle = new PcapHandle.Builder(name)
                 .snaplen(65536)
                 .promiscuousMode(PcapNetworkInterface.PromiscuousMode.PROMISCUOUS)
                 .timeoutMillis(10)
@@ -22,11 +21,9 @@ public class InterfaceHandler extends Thread {
 
     @Override
     public void run() {
-        final InterfaceListener interfaceListener = new InterfaceListener(selector.getFrames());
+        final InterfaceListener interfaceListener = new InterfaceListener();
 
         try {
-
-            this.selector.getLogger().info("Iniciando captura de pacotes...");
 
             handle.loop(-1, interfaceListener);
 
@@ -34,7 +31,7 @@ public class InterfaceHandler extends Thread {
 
         } catch (PcapNativeException | InterruptedException | NotOpenException e) {
 
-            this.selector.getLogger().error("#2 Falha ao iniciar captura de pacotes do handler!", e);
+            App.logger.error("#2 Falha ao iniciar captura de pacotes do handler!", e);
 
         }
     }
