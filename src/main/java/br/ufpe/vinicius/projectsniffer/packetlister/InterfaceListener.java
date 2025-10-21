@@ -1,9 +1,9 @@
 package br.ufpe.vinicius.projectsniffer.packetlister;
 
-import br.ufpe.vinicius.projectsniffer.frame.Frame;
-import br.ufpe.vinicius.projectsniffer.frame.FrameEthernet;
-import br.ufpe.vinicius.projectsniffer.frame.FrameIpv4;
-import br.ufpe.vinicius.projectsniffer.frame.FrameTcp;
+import br.ufpe.vinicius.projectsniffer.packet.IPacket;
+import br.ufpe.vinicius.projectsniffer.packet.frames.FrameEthernet;
+import br.ufpe.vinicius.projectsniffer.packet.frames.FrameIpv4;
+import br.ufpe.vinicius.projectsniffer.packet.frames.FrameTcp;
 
 import br.ufpe.vinicius.projectsniffer.services.PacketService;
 import br.ufpe.vinicius.projectsniffer.utils.SpringContext;
@@ -74,8 +74,8 @@ public class InterfaceListener implements PacketListener {
 
         String timeStamp = formatter.format(nowUtc);
 
-        final Frame frame = new Frame(timeStamp, ethernet, ipv4, tcp);
+        final IPacket iPacket = new IPacket(timeStamp, ethernet, ipv4, tcp);
 
-        packetService.addFrame(frame);
+        packetService.addFrame(iPacket);
     }
 }

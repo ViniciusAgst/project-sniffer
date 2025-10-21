@@ -7,11 +7,10 @@
     box-sizing: border-box;
 }
 
-
 body {
     font-family: "SUSE Mono", monospace;
     height: 100vh;
-    overflow: hidden;
+    overflow-y: scroll;
     background: url("../images/background.gif") no-repeat;
     background-size: cover;
     backdrop-filter: blur(20px) brightness(35%);
@@ -26,7 +25,6 @@ body {
 }
 
 #footer {
-    position: fixed; /* fixo no fundo da página */
     bottom: 0;
     width: 100%;
     text-align: center;

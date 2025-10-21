@@ -1,6 +1,6 @@
 package br.ufpe.vinicius.projectsniffer.controllers;
 
-import br.ufpe.vinicius.projectsniffer.frame.Frame;
+import br.ufpe.vinicius.projectsniffer.packet.IPacket;
 import br.ufpe.vinicius.projectsniffer.services.PacketService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ public class PacketController {
      * @return lista de pacotes
      */
     @GetMapping("/list")
-    public List<Frame> list(@RequestParam(defaultValue = "100") int limit) {
+    public List<IPacket> list(@RequestParam(defaultValue = "100") int limit) {
         return packetService.getFrames(limit);
     }
 
