@@ -35,7 +35,10 @@
         <button type="submit">Entrar</button>
     </form>
 
-    <p class="error-block" th:if="${erro}" th:text="${erro}"></p>
+    <div th:if="${param.error}">
+        <p style="color: red;">Usuário ou senha inválidos!</p>
+    </div>
+
 </div>
 
 <script th:src="@{/scripts/dashboard-net.js}"></script>

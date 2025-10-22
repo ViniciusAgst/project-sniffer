@@ -4,29 +4,40 @@ import br.ufpe.vinicius.projectsniffer.services.CookieService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
 
+    private final CookieService cookieService;
+
     @Autowired
-    public CookieService cookieService;
+    public LoginController(CookieService cookieService) {
+        this.cookieService = cookieService;
+    }
 
     @PostMapping("/auth")
     public String auth(
-            HttpServletResponse request,
+            HttpServletResponse response,
             @RequestParam String username,
-            @RequestParam String password,
-            Model model) {
+            @RequestParam String password) {
 
         if ("admin".equals(username) && "1234".equals(password)) {
-            cookieService.addCookie(request, "session", "logado", -1, null, null, true, true);
+            cookieService.addCookie(response, "session", "logado", 1000, null, null, false, true);
             return "redirect:/";
-        } else {
-            model.addAttribute("erro", "Usuário ou senha inválidos!");
-            return "login";
         }
+
+        return "redirect:/login?error=true";
+    }
+
+
+    @PostMapping("/exit")
+    public String auth(
+            HttpServletResponse response) {
+
+        cookieService.deleteCookie(response, "session", null, null);
+
+        return "redirect:/login";
     }
 }

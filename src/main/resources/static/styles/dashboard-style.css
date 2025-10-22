@@ -12,7 +12,6 @@ body {
     height: 100vh;
     overflow-y: scroll;
     background: url("../images/background.gif") no-repeat;
-    background-size: cover;
     backdrop-filter: blur(20px) brightness(35%);
 }
 

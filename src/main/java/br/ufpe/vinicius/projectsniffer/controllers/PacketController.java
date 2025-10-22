@@ -26,7 +26,7 @@ public class PacketController {
      */
     @GetMapping("/list")
     public List<IPacket> list(@RequestParam(defaultValue = "100") int limit) {
-        return packetService.getFrames(limit);
+        return packetService.getPackets(limit);
     }
 
     /**

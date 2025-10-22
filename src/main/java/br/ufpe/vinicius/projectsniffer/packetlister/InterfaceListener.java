@@ -76,6 +76,6 @@ public class InterfaceListener implements PacketListener {
 
         final IPacket iPacket = new IPacket(timeStamp, ethernet, ipv4, tcp);
 
-        packetService.addFrame(iPacket);
+        packetService.addPacket(iPacket);
     }
 }

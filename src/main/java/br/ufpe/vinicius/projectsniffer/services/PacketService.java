@@ -28,11 +28,11 @@ public class PacketService {
 
     private long sizer = 0;
 
-    public List<IPacket> getFrames(int limit) {
+    public List<IPacket> getPackets(int limit) {
         return packets.getAll().stream().limit(limit).collect(Collectors.toList());
     }
 
-    public void addFrame(IPacket frame) {
+    public void addPacket(IPacket frame) {
         packets.add(frame);
 
         PacketDTO dto = new PacketDTO();
